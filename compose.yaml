@@ -1,0 +1,45 @@
+
+services:
+  php_apache:
+    build:
+      dockerfile: Dockerfile #dockerfile name
+      context: php-apache/ #folder of the dockerfile
+    # links:
+    #   - "phpmyadmin"
+    ports:
+      - 9000:80 #host port and container port
+      #
+    volumes:
+      - ./php-apache:/var/www/html/ #set source of file to php-apache folder to display html
+    depends_on:
+      - mysql
+  
+  nodejs:
+    build:
+      context: nodejs
+      dockerfile: Dockerfile
+    command: bash -c "npm run start" #startup command,change with json cmd
+    ports:
+      - 9001:90
+    depends_on:
+      - mysql
+    restart: on-failure
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pasta  
+      MYSQL_DATABASE: studentData
+      MYSQL_USER: ace
+      MYSQL_PASSWORD: ace
+    ports:
+      - 1359:5432
+  phpmyadmin:
+    restart: always
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 5555:80
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
