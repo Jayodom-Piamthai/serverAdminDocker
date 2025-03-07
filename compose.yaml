@@ -18,7 +18,10 @@ services:
     build:
       context: nodejs
       dockerfile: Dockerfile
-    command: bash -c "npm run start" #startup command,change with json cmd
+    # command: bash -c "npm run start" #startup command,change with json cmd
+    # command: "node app.js" #startup command,change with json cmd
+    environment:
+      NODE_ENV: production
     ports:
       - 9001:90
     depends_on:
