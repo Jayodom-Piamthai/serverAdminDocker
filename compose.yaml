@@ -23,7 +23,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 9001:90
+      - 9001:9001
     depends_on:
       - mysql
     restart: on-failure
