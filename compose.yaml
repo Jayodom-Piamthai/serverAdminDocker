@@ -1,4 +1,4 @@
-
+version: '3.8'
 services:
   php_apache:
     build:
@@ -13,20 +13,6 @@ services:
       - ./php-apache:/var/www/html/ #set source of file to php-apache folder to display html
     depends_on:
       - mysql
-  
-  nodejs:
-    build:
-      context: nodejs
-      dockerfile: Dockerfile
-    # command: bash -c "npm run start" #startup command,change with json cmd
-    # command: "node app.js" #startup command,change with json cmd
-    environment:
-      NODE_ENV: production
-    ports:
-      - 9001:9001
-    depends_on:
-      - mysql
-    restart: on-failure
   mysql:
     image: mysql
     restart: always
@@ -46,3 +32,16 @@ services:
       - mysql
     environment:
       PMA_HOST: mysql
+  nodejs:
+    build:
+      context: nodejs
+      dockerfile: Dockerfile
+    # command: bash -c "npm run start" #startup command,change with json cmd
+    # command: "node app.js" #startup command,change with json cmd
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9001:9001
+    depends_on:
+      - mysql
+    restart: on-failure
